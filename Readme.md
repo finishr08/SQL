@@ -173,7 +173,7 @@ INSERT INTO students (id, name, age) VALUES
 (3, 'Ahmed', 19);
 ```
 
-## **Practice Qno-1**
+## Practice Qno-1
 
 ### Qs: Create the database for your university
 
@@ -380,16 +380,21 @@ FROM students
 GROUP BY age;
 ```
 
+## Practice Question no-2 & Question no-3
+
 ### Qs: Write the Query to find Avg marks in each city in ASC order.
 
 ```sql
 -- Step 1: Create the database
+
 CREATE DATABASE IF NOT EXISTS university_of_rasul;
 
 -- Step 2: Select the database to use
+
 USE university_of_rasul;
 
 -- Step 3: Create the students table with roll_no, name, marks, and city
+
 CREATE TABLE IF NOT EXISTS students(
     roll_no INT PRIMARY KEY,      -- Unique student roll number
     name VARCHAR(50),             -- Student name
@@ -398,6 +403,7 @@ CREATE TABLE IF NOT EXISTS students(
 );
 
 -- Step 4: Insert student records with marks and city
+
 INSERT INTO
 students (roll_no, name, marks, city)
 VALUES
@@ -416,6 +422,7 @@ VALUES
 -- GROUP BY groups the records by city
 -- AVG(marks) calculates the average marks for each city
 -- ORDER BY sorts the results in ascending order of average marks
+
 SELECT city, AVG(marks)
 FROM students
 GROUP BY city
@@ -440,4 +447,50 @@ ORDER BY AVG(marks) ASC;
 | Islamabad   |          92.0 |
 | Rawalpindi  |          95.0 |
 +-------------+---------------+
+```
+
+### Qs: Create a transactions table, insert 10 records with different payment modes and international cities, and write a query to count transactions per payment mode in ascending order by mode.
+
+```sql
+-- Step 1: Create a new database for storing transaction data (if it doesn't already exist)
+
+CREATE DATABASE IF NOT EXISTS university_of_rasul_transactions;
+
+-- Step 2: Select the newly created database for use
+
+USE university_of_rasul_transactions;
+
+-- Step 3: Create a 'transactions' table to store transaction records
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id INT PRIMARY KEY,             -- Unique ID for each transaction
+    customer VARCHAR(50),          -- Name of the customer
+    mode VARCHAR(50),              -- Payment method used (e.g., Credit Card, PayPal)
+    city VARCHAR(20)               -- City where the transaction occurred
+);
+
+-- Step 4: Insert 10 sample transaction records with various modes and cities
+
+INSERT INTO transactions (id, customer, mode, city)
+VALUES
+(1, "Mustafa", "Credit Card", "New York"),
+(2, "Amir", "PayPal", "London"),
+(3, "Ayesha", "Debit Card", "Tokyo"),
+(4, "Bilal", "Apple Pay", "Sydney"),
+(5, "Zara", "Google Pay", "Toronto"),
+(6, "Hassan", "Cash", "Paris"),
+(7, "Fatima", "Bank Transfer", "Dubai"),
+(8, "Usman", "Credit Card", "Berlin"),
+(9, "Maryam", "PayPal", "Singapore"),
+(10, "Omar", "Crypto", "Amsterdam");
+
+-- Step 5: Query to count how many times each payment mode was used
+-- GROUP BY groups the transactions by mode
+-- COUNT(mode) counts how many transactions exist for each payment mode
+-- ORDER BY sorts results first by mode name, then by frequency
+
+SELECT mode, COUNT(mode)
+FROM transactions
+GROUP BY mode
+ORDER BY mode, COUNT(mode);
 ```
