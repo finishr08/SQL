@@ -183,13 +183,13 @@ INSERT INTO students (id, name, age) VALUES
 
 ```sql
 -- Step 1: Create a new database for the university
-CREATE DATABASE university_of_rasul;
+CREATE DATABASE IF NOT EXISTS university_of_rasul;
 
 -- Step 2: Select the newly created database to work in
 USE university_of_rasul;
 
 -- Step 3: Create a 'students' table with roll_no, name, and city columns
-CREATE TABLE students(
+CREATE TABLE IF NOT EXISTS students(
     roll_no INT PRIMARY KEY,      -- Unique identifier for each student
     name VARCHAR(50),             -- Student's name (up to 50 characters)
     city VARCHAR(20)              -- Student's city (up to 20 characters)

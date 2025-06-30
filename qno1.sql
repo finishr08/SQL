@@ -1,5 +1,5 @@
 -- Step 1: Create a new database for the university
-CREATE DATABASE university_of_rasul;
+CREATE DATABASE IF NOT EXISTS  university_of_rasul;
 
 -- Step 2: Select the newly created database to work in
 USE university_of_rasul;
