@@ -390,7 +390,7 @@ CREATE DATABASE IF NOT EXISTS university_of_rasul;
 USE university_of_rasul;
 
 -- Step 3: Create the students table with roll_no, name, marks, and city
-CREATE TABLE students(
+CREATE TABLE IF NOT EXISTS students(
     roll_no INT PRIMARY KEY,      -- Unique student roll number
     name VARCHAR(50),             -- Student name
     marks INT,                    -- Marks obtained by the student
