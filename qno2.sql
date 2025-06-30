@@ -2,7 +2,7 @@
 
 
 -- Step 1: Create the database
-CREATE DATABASE university_of_rasul;
+CREATE DATABASE IF NOT EXISTS university_of_rasul;
 
 -- Step 2: Select the database to use
 USE university_of_rasul;
