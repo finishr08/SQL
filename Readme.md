@@ -494,3 +494,146 @@ FROM transactions
 GROUP BY mode
 ORDER BY mode, COUNT(mode);
 ```
+
+## 📌 **HAVING Clause**
+
+The `HAVING` clause is used to filter groups created by the `GROUP BY` clause. It works **like `WHERE` but for aggregates**.
+
+```sql
+SELECT age, COUNT(*) AS total
+FROM students
+GROUP BY age
+HAVING COUNT(*) > 2;
+```
+
+---
+
+## 🧭 **General Order of SQL Execution (Query Processing Order)**
+
+Understanding the **logical order** in which SQL executes clauses is important:
+
+1. `FROM`
+2. `JOIN`
+3. `WHERE`
+4. `GROUP BY`
+5. `HAVING`
+6. `SELECT`
+7. `ORDER BY`
+8. `LIMIT`
+
+**Example:**
+
+```sql
+SELECT department, COUNT(*) AS total
+FROM employees
+WHERE status = 'active'
+GROUP BY department
+HAVING COUNT(*) > 10
+ORDER BY total DESC
+LIMIT 5;
+```
+
+---
+
+## 🔁 **UPDATE Command**
+
+Used to **modify existing records** in a table.
+
+```sql
+UPDATE students
+SET age = 21
+WHERE id = 1;
+```
+
+> ⚠️ Without a `WHERE` clause, it updates all rows.
+
+---
+
+## ❌ **DELETE Command**
+
+Used to **remove records** from a table.
+
+```sql
+DELETE FROM students
+WHERE age < 18;
+```
+
+> ⚠️ Without a `WHERE` clause, it deletes all records.
+
+---
+
+## 🔗 **Revisiting Foreign Keys**
+
+A **foreign key** in one table points to a **primary key** in another. It ensures **referential integrity**.
+
+```sql
+CREATE TABLE orders (
+  id INT PRIMARY KEY,
+  student_id INT,
+  FOREIGN KEY (student_id) REFERENCES students(id)
+);
+```
+
+---
+
+## 🌊 **Cascading Foreign Keys**
+
+With **`ON DELETE CASCADE`** or **`ON UPDATE CASCADE`**, changes in the parent table affect the child automatically.
+
+```sql
+CREATE TABLE orders (
+  id INT PRIMARY KEY,
+  student_id INT,
+  FOREIGN KEY (student_id)
+    REFERENCES students(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+```
+
+- `ON DELETE CASCADE`: Deleting a student deletes related orders.
+- `ON UPDATE CASCADE`: Updating student ID updates related orders.
+
+---
+
+## 🔧 **ALTER Command**
+
+Used to **modify the structure** of an existing table.
+
+```sql
+-- Add a new column
+ALTER TABLE students ADD email VARCHAR(100);
+
+-- Drop a column
+ALTER TABLE students DROP COLUMN email;
+
+-- Rename a column (MySQL specific)
+ALTER TABLE students CHANGE name full_name VARCHAR(100);
+```
+
+---
+
+## ✏️ **CHANGE vs MODIFY (MySQL-specific)**
+
+- `CHANGE`: Rename and change datatype.
+- `MODIFY`: Only change datatype.
+
+```sql
+-- Change name to full_name and update type
+ALTER TABLE students CHANGE name full_name VARCHAR(150);
+
+-- Just change data type
+ALTER TABLE students MODIFY age TINYINT;
+```
+
+---
+
+## 🧹 **TRUNCATE Command**
+
+Used to **quickly delete all rows** from a table **without logging individual row deletions** (faster than `DELETE`).
+
+```sql
+TRUNCATE TABLE students;
+```
+
+> ⚠️ Cannot be rolled back in most systems.
