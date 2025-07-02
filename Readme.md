@@ -686,6 +686,60 @@ TRUNCATE TABLE students;
    RIGHT JOIN orders ON students.id = orders.student_id;
    ```
 
+5. ### **SELF JOIN in SQL**
+
+A **Self Join** is a regular join but the **table is joined with itself**. It’s useful for comparing rows within the same table.
+
+### ✅ When to Use:
+
+- Hierarchical data (e.g., employees and their managers)
+- Comparing related rows in the same table
+
+### 📌 Syntax:
+
+```sql
+SELECT A.column_name, B.column_name
+FROM table_name A
+JOIN table_name B ON A.common_field = B.common_field;
+```
+
+### 👩‍💼 Example: Employees and Managers
+
+```sql
+CREATE TABLE employees (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  manager_id INT
+);
+
+-- Insert sample data
+INSERT INTO employees (id, name, manager_id) VALUES
+(1, 'Ali', NULL),         -- CEO
+(2, 'Sara', 1),           -- Reports to Ali
+(3, 'Zara', 1),           -- Reports to Ali
+(4, 'Omar', 2);           -- Reports to Sara
+
+-- Self Join to find employees and their managers
+SELECT
+  E.name AS employee_name,
+  M.name AS manager_name
+FROM employees E
+LEFT JOIN employees M ON E.manager_id = M.id;
+```
+
+### 🔍 Output:
+
+```sql
++----------------+----------------+
+| employee_name  | manager_name   |
++----------------+----------------+
+| Ali            | NULL           |
+| Sara           | Ali            |
+| Zara           | Ali            |
+| Omar           | Sara           |
++----------------+----------------+
+```
+
 ## 🔁 **UNION in SQL**
 
 Used to **combine the result** of two or more `SELECT` queries into a single result set.
