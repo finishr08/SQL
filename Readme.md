@@ -637,3 +637,131 @@ TRUNCATE TABLE students;
 ```
 
 > ⚠️ Cannot be rolled back in most systems.
+
+## 🔗 **JOINS in SQL**
+
+**JOINS** are used to combine rows from two or more tables based on a related column.
+
+### Types of Joins:
+
+1. ### **INNER JOIN**
+
+   Returns only the **matching rows** from both tables.
+
+   ```sql
+   SELECT students.name, orders.id
+   FROM students
+   INNER JOIN orders ON students.id = orders.student_id;
+   ```
+
+2. ### **LEFT JOIN (LEFT OUTER JOIN)**
+
+   Returns **all rows from the left** table and **matched rows from the right**, or `NULL` if no match.
+
+   ```sql
+   SELECT students.name, orders.id
+   FROM students
+   LEFT JOIN orders ON students.id = orders.student_id;
+   ```
+
+3. ### **RIGHT JOIN (RIGHT OUTER JOIN)**
+
+   Returns **all rows from the right** table and **matched rows from the left**.
+
+   ```sql
+   SELECT students.name, orders.id
+   FROM students
+   RIGHT JOIN orders ON students.id = orders.student_id;
+   ```
+
+4. ### **FULL JOIN (FULL OUTER JOIN)**
+
+   **Note:** Not supported directly in MySQL; can be emulated with `UNION`.
+
+   ```sql
+   SELECT * FROM students
+   LEFT JOIN orders ON students.id = orders.student_id
+   UNION
+   SELECT * FROM students
+   RIGHT JOIN orders ON students.id = orders.student_id;
+   ```
+
+## 🔁 **UNION in SQL**
+
+Used to **combine the result** of two or more `SELECT` queries into a single result set.
+
+- Columns must have the **same number** and **compatible data types**.
+
+```sql
+SELECT name FROM students
+UNION
+SELECT name FROM teachers;
+```
+
+- `UNION ALL` includes **duplicate rows**.
+
+```sql
+SELECT name FROM students
+UNION ALL
+SELECT name FROM teachers;
+```
+
+## 🔍 **SQL Subqueries**
+
+A **subquery** is a query **inside another query**, often used in `WHERE`, `FROM`, or `SELECT` clauses.
+
+### 1. **Subquery in WHERE Clause**
+
+```sql
+SELECT name FROM students
+WHERE age > (SELECT AVG(age) FROM students);
+```
+
+### 2. **Subquery in FROM Clause**
+
+```sql
+SELECT avg_age FROM (
+  SELECT AVG(age) AS avg_age FROM students
+) AS sub;
+```
+
+### 3. **Subquery in SELECT Clause**
+
+```sql
+SELECT name, (SELECT COUNT(*) FROM orders WHERE orders.student_id = students.id) AS total_orders
+FROM students;
+```
+
+## 👁️ **MySQL Views**
+
+A **view** is a **virtual table** based on the result of a `SELECT` query. It doesn’t store data but presents it.
+
+### Creating a View:
+
+```sql
+CREATE VIEW student_summary AS
+SELECT name, age FROM students WHERE age > 18;
+```
+
+### Querying a View:
+
+```sql
+SELECT * FROM student_summary;
+```
+
+### Updating a View:
+
+```sql
+CREATE OR REPLACE VIEW student_summary AS
+SELECT name FROM students WHERE age >= 21;
+```
+
+### Dropping a View:
+
+```sql
+DROP VIEW student_summary;
+```
+
+> Views help simplify complex queries, enhance security, and improve readability.
+
+---
